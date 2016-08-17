@@ -1,7 +1,10 @@
 package com.clouway.bank.adapter.http;
 
 import com.clouway.bank.core.AccountRepository;
+import com.clouway.bank.core.SessionRepository;
+import com.clouway.bank.core.TransactionRepository;
 import com.clouway.bank.core.Validator;
+import com.clouway.bank.utils.SessionIdFinder;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -26,12 +29,18 @@ import java.text.DecimalFormat;
 public class WithdrawService extends HttpServlet {
   private final Validator validator;
   private final AccountRepository accountRepository;
+  private final SessionRepository sessionRepository;
+  private final TransactionRepository transactionRepository;
+  private final SessionIdFinder sessionIdFinder;
   private Gson json;
 
   @Inject
-  public WithdrawService(@Named("amountValidator") Validator validator, AccountRepository accountRepository, Gson json) {
+  public WithdrawService(@Named("amountValidator") Validator validator, AccountRepository accountRepository, SessionRepository sessionRepository, TransactionRepository transactionRepository, SessionIdFinder sessionIdFinder, Gson json) {
     this.validator = validator;
     this.accountRepository = accountRepository;
+    this.sessionRepository = sessionRepository;
+    this.transactionRepository = transactionRepository;
+    this.sessionIdFinder = sessionIdFinder;
     this.json = json;
   }
 
@@ -41,7 +50,9 @@ public class WithdrawService extends HttpServlet {
 
     TransactionRequestDto requestDto;
 
-    String userEmail = "d@abv.bg";
+    String sessionId = sessionIdFinder.findSid(req.getCookies());
+    String userEmail = sessionRepository.findUserEmailBySid(sessionId);
+
     String message;
     try {
       ServletInputStream inputStream = req.getInputStream();
@@ -80,6 +91,8 @@ public class WithdrawService extends HttpServlet {
 
       Double currentBalance = accountRepository.getBalance(userEmail);
       currentBalance = Double.parseDouble(new DecimalFormat("##.##").format(currentBalance));
+
+      transactionRepository.updateHistory(userEmail, "withdraw", requestDto.amount);
 
       message = "Success! You withdraw " + requestDto.amount + " from your balance";
 

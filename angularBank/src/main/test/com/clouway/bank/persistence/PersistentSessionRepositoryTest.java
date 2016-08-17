@@ -23,9 +23,6 @@ import static org.junit.Assert.assertThat;
  * @author Stanislava Kaukova(sisiivanovva@gmail.com)
  */
 public class PersistentSessionRepositoryTest {
-  @Rule
-  public JUnitRuleMockery context = new JUnitRuleMockery();
-
   private Provider<Connection> provider;
   private PreparedStatement statement;
 

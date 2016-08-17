@@ -1,6 +1,8 @@
 package com.clouway.bank.guiceModule;
 
 import com.clouway.bank.adapter.jdbc.persistence.JdbcAdapterModule;
+import com.clouway.bank.core.CurrentDate;
+import com.clouway.bank.core.CurrentDateImplementation;
 import com.clouway.bank.core.CurrentTime;
 import com.clouway.bank.core.CurrentTimeImplementation;
 import com.clouway.bank.core.IdGenerator;
@@ -22,11 +24,17 @@ public class BankModule extends AbstractModule {
   protected void configure() {
     install(new JdbcAdapterModule());
 
+    bind(CurrentDate.class).to(CurrentDateImplementation.class);
+
     bind(IdGenerator.class).to(SessionIdGenerator.class);
+
+    bind(Integer.class)
+            .annotatedWith(Names.named("pageSize"))
+            .toInstance(5);
 
     bind(Validator.class)
             .annotatedWith(Names.named("amountValidator"))
-            .to(AmountValidator.class);
+            .toInstance(new AmountValidator());
   }
 
   @Provides
@@ -35,12 +43,13 @@ public class BankModule extends AbstractModule {
   }
 
   @Provides
-  SessionIdFinder getSessionId() {
-    return new SessionIdFinder("sessionId");
+  CurrentTime getCurrentTime() {
+    return new CurrentTimeImplementation(1);
   }
 
   @Provides
-  CurrentTime getCurrentTime() {
-    return new CurrentTimeImplementation(10000);
+  SessionIdFinder getSessionId() {
+    return new SessionIdFinder("sessionId");
   }
 }
+

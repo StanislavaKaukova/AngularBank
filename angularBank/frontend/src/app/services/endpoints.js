@@ -8,5 +8,9 @@ angular.module('bank.endpoints', [])
     DEPOSIT: '/r/account/deposit',
     WITHDRAW: '/r/account/withdraw',
     USER_BALANCE: '/r/user/account/balance',
+    TRANSACTIONS: '/r/account/',
+    ACCOUNT_HISTORY: '/r/account/history',
+    ACCOUNT_HISTORY_PAGES: '/r/transactionsHistory/totalPages'
+    USER_BALANCE: '/r/user/account/balance',
     REGISTER: '/r/register'
   });

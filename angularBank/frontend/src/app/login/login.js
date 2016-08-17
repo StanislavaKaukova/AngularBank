@@ -36,10 +36,11 @@ angular.module('bank.login', [
     vm.login = function (email,password) {
       loginGateway.login(email, password)
         .then(function (response) {
+
             $rootScope.currentAccount = vm.email;
 
             var expireTime = new Date();
-            expireTime.setMinutes(expireTime.getMinutes() + 10);
+            expireTime.setMinutes(expireTime.getMinutes() + 100);
 
             var sessionId = response.sessionId;
 

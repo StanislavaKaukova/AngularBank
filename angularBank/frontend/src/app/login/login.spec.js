@@ -75,7 +75,7 @@ describe("LoginCtrl test", function () {
     var baseTime = new Date();
     jasmine.clock().mockDate(baseTime);
 
-    var expireTime = baseTime.setMinutes(baseTime.getMinutes() + 10);
+    var expireTime = baseTime.setMinutes(baseTime.getMinutes() + 100);
 
     return new Date(expireTime);
   }

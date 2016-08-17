@@ -1,0 +1,34 @@
+<div ng-init="vm.loadPage(1);vm.getTotalPages()">
+    <div class="container">
+        <h2>Transactions History</h2>
+        <table class="table table-bordered">
+            <tr>
+                <th>Date:</th>
+                <th>User email:</th>
+                <th>Operation</th>
+                <th>Amount:</th>
+                <th>New Balance:</th>
+            </tr>
+            <tbody>
+            <tr ng-repeat="transaction in vm.transactions">
+                <td>{{transaction.date | date}}</td>
+                <td>{{transaction.email}}</td>
+                <td>{{transaction.operation}}</td>
+                <td>{{transaction.processingAmount}}</td>
+                <td>{{transaction.currentAmount}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <li>
+                <a ng-click="vm.getPrevious()">Previous</a>
+            </li>
+            <li ng-repeat="page in vm.pages">
+                <a ng-click="vm.loadPage(page);vm.currentPage=page">{{page}}</a>
+            </li>
+            <li>
+                <a ng-click="vm.getNext()">Next</a>
+            </li>
+        </div>
+    </div>
+</div>

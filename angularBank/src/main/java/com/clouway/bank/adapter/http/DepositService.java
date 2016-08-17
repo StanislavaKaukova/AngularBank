@@ -1,7 +1,10 @@
 package com.clouway.bank.adapter.http;
 
 import com.clouway.bank.core.AccountRepository;
+import com.clouway.bank.core.SessionRepository;
+import com.clouway.bank.core.TransactionRepository;
 import com.clouway.bank.core.Validator;
+import com.clouway.bank.utils.SessionIdFinder;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -26,12 +29,18 @@ import java.text.DecimalFormat;
 public class DepositService extends HttpServlet {
   private final Validator validator;
   private final AccountRepository accountRepository;
+  private final TransactionRepository transactionRepository;
+  private final SessionRepository sessionRepository;
+  private final SessionIdFinder sessionIdFinder;
   private Gson json;
 
   @Inject
-  public DepositService(@Named("amountValidator") Validator validator, AccountRepository accountRepository, Gson json) {
+  public DepositService(@Named("amountValidator") Validator validator, AccountRepository accountRepository, TransactionRepository transactionRepository, SessionRepository sessionRepository, SessionIdFinder sessionIdFinder, Gson json) {
     this.validator = validator;
     this.accountRepository = accountRepository;
+    this.transactionRepository = transactionRepository;
+    this.sessionRepository = sessionRepository;
+    this.sessionIdFinder = sessionIdFinder;
     this.json = json;
   }
 
@@ -41,7 +50,9 @@ public class DepositService extends HttpServlet {
 
     TransactionRequestDto requestDto;
 
-    String userEmail = "d@abv.bg";
+    String sessionId = sessionIdFinder.findSid(req.getCookies());
+    String userEmail = sessionRepository.findUserEmailBySid(sessionId);
+
     String message;
     try {
       ServletInputStream inputStream = req.getInputStream();
@@ -71,10 +82,10 @@ public class DepositService extends HttpServlet {
     } else {
 
       accountRepository.deposit(userEmail, requestDto.amount);
-
       Double currentBalance = accountRepository.getBalance(userEmail);
       currentBalance = Double.parseDouble(new DecimalFormat("##.##").format(currentBalance));
 
+      transactionRepository.updateHistory(userEmail, "deposit", requestDto.amount);
       message = "Success! You added " + requestDto.amount + " to your balance";
 
       resp.getWriter().print(json.toJson(new TransactionResponseDto(currentBalance, message)));

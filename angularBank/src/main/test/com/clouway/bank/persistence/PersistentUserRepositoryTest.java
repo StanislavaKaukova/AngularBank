@@ -1,11 +1,11 @@
 package com.clouway.bank.persistence;
 
 import com.clouway.bank.adapter.jdbc.persistence.PersistentUserRepository;
-import com.clouway.bank.core.ConnectionException;
 import com.clouway.bank.core.User;
 import com.clouway.bank.core.UserRepository;
+import com.clouway.bank.utils.DatabaseHelper;
+import com.google.common.base.Optional;
 import com.google.inject.Provider;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,5 +44,8 @@ public class PersistentUserRepositoryTest {
     User user = repository.findByEmail("aaaa@abv.bg");
 
     assertThat(user, is(equalTo(null)));
+    repository.findByEmail("aaaa@abv.bg");
+
+    assertThat(repository.findByEmail("aaaa@abv.bg"), is(equalTo(null)));
   }
 }

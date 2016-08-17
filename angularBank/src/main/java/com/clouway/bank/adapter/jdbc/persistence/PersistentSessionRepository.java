@@ -3,12 +3,18 @@ package com.clouway.bank.adapter.jdbc.persistence;
 import com.clouway.bank.core.RowGetter;
 import com.clouway.bank.core.Session;
 import com.clouway.bank.core.SessionRepository;
+import com.clouway.bank.core.ConnectionException;
+import com.clouway.bank.core.RowGetter;
+import com.clouway.bank.core.Session;
+import com.clouway.bank.core.SessionRepository;
+import com.clouway.bank.core.User;
 import com.clouway.bank.utils.DatabaseHelper;
 import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

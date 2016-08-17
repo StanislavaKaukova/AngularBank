@@ -9,7 +9,9 @@ angular.module('bank', [
   'angular-growl',
   'bank.transactions',
   'bank.login',
-  'bank.register'
+  'bank.register',
+  'bank.login',
+  'bank.history'
 ])
 
   .config(function myAppConfig($stateProvider, $urlRouterProvider) {
