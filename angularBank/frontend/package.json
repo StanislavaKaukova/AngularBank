@@ -1,0 +1,29 @@
+{
+  "author": "Stanislava",
+  "name": "bank",
+  "version": "0.3.2",
+  "homepage": "com/clouway/bank",
+  "dependencies": {},
+  "devDependencies": {
+    "angular": "^1.5.8",
+    "grunt": "~1.0.1",
+    "grunt-bump": "0.8.0",
+    "grunt-connect-proxy": "^0.2.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-less": "~1.4.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-conventional-changelog": "^6.1.0",
+    "grunt-html2js": "^0.3.6",
+    "grunt-karma": "^2.0.0",
+    "grunt-ng-annotate": "^2.0.2",
+    "karma": "^1.2.0",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-jasmine": "^1.0.2",
+    "latest": "^0.2.0"
+  }
+}
