@@ -1,12 +1,14 @@
 package com.clouway.bank.adapter.server.jetty;
 
+import com.clouway.bank.guiceModule.BankModule;
+import com.clouway.bank.guiceModule.BankServletModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceFilter;
 import com.google.inject.servlet.GuiceServletContextListener;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.DefaultServlet;
-import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 import javax.servlet.DispatcherType;
 import java.util.EnumSet;
@@ -22,7 +24,8 @@ public class Jetty {
   }
 
   public void start() {
-    ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+    WebAppContext context = new WebAppContext();
+    context.setResourceBase("src/main/webapp");
     context.setContextPath("/");
 
     context.addFilter(GuiceFilter.class, "/*", EnumSet.allOf(DispatcherType.class));
@@ -31,7 +34,7 @@ public class Jetty {
     context.addEventListener(new GuiceServletContextListener() {
       @Override
       protected Injector getInjector() {
-        return Guice.createInjector();
+        return Guice.createInjector(new BankModule(), new BankServletModule());
       }
     });
 

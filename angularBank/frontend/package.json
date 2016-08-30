@@ -3,6 +3,14 @@
   "name": "bank",
   "version": "0.3.2",
   "homepage": "com/clouway/bank",
+  "licenses": {
+    "url": "https://raw.github.com/bank/bank/master/LICENSE"
+  },
+  "bugs": "https://github.com/Stanislava/Stanislava/issues",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Stanislava/bank.git"
+  },
   "dependencies": {},
   "devDependencies": {
     "angular": "^1.5.8",
@@ -21,6 +29,7 @@
     "grunt-html2js": "^0.3.6",
     "grunt-karma": "^2.0.0",
     "grunt-ng-annotate": "^2.0.2",
+    "jasmine-core": "^2.4.1",
     "karma": "^1.2.0",
     "karma-firefox-launcher": "^1.0.0",
     "karma-jasmine": "^1.0.2",

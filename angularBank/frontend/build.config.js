@@ -64,10 +64,12 @@ module.exports = {
       'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js',
       'vendor/angular-ui-router/release/angular-ui-router.js',
       'vendor/angular-ui-utils/modules/route/route.js',
-      'vendor/angular-loading-bar/build/loading-bar.min.js'
+      'vendor/angular-loading-bar/build/loading-bar.min.js',
+      'vendor/angular-growl-v2/build/angular-growl.js'
     ],
     css: [
-      'vendor/angular-loading-bar/build/loading-bar.min.css'
+      'vendor/angular-loading-bar/build/loading-bar.min.css',
+      'vendor/angular-growl-v2/build/angular-growl.css'
     ],
     assets: []
   }
