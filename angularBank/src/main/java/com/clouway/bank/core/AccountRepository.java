@@ -28,9 +28,23 @@ public interface AccountRepository {
   /**
    * Will be added amount to user
    *
-   * @param email user email
+   * @param email  user email
+   * @param amount added amount
    */
   void deposit(String email, Double amount);
 
+  /**
+   * Will be get current balance
+   *
+   * @param email current user
+   * @return current balance
+   */
   Double getBalance(String email);
+
+  /**
+   * Will be withdraw from account
+   * @param userEmail current user
+   * @param amount cash out
+   */
+  void withdraw(String userEmail, Double amount);
 }

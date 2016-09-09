@@ -56,6 +56,18 @@ public class PersistentAccountRepositoryTest {
 
     Double actual = account.getBalance();
 
-    assertThat(actual, is(00.00));
+    assertThat(actual, is(00.00d));
+  }
+
+  @Test
+  public void withdraw() throws Exception {
+    accountRepository.createAccount(account);
+    accountRepository.deposit(account.email, 100.00d);
+
+    accountRepository.withdraw(account.email, 100.00d);
+
+    Account actual = accountRepository.findByEmail(account.email);
+
+    assertThat(actual.getBalance(), is(0.0d));
   }
 }

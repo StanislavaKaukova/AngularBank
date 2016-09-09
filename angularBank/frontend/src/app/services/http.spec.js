@@ -47,9 +47,9 @@ describe('httpRequest service test', function () {
   });
 
   it('should make get request with error 404', function () {
-    httpBackend.when('GET', '/deposit').respond(404, 'error');
+    httpBackend.when('GET', '/transactions').respond(404, 'error');
 
-    var returnedPromise = httpRequest.get('/deposit');
+    var returnedPromise = httpRequest.get('/transactions');
     returnedPromise.then(function success(response) {
 
     }, function error(response) {

@@ -16,6 +16,10 @@ public class Account {
     this.balance += sum;
   }
 
+  public void withdraw(Double sum) {
+    this.balance -= sum;
+  }
+
   public Double getBalance() {
     return this.balance;
   }

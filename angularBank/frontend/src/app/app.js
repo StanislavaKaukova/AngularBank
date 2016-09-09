@@ -6,7 +6,7 @@ angular.module('bank', [
   'templates-common',
   'ui.router',
   'angular-growl',
-  'bank.deposit'
+  'bank.transactions'
 ])
 
   .config(function myAppConfig($stateProvider, $urlRouterProvider) {

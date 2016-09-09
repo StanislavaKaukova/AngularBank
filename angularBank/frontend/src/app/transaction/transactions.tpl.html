@@ -8,9 +8,12 @@
                     <input type="text" class="form-control" name="amount" placeholder="Enter amount"
                            ng-model="vm.amount" step="0.01"><br>
                 </div>
-                <button type="submit" class="btn btn-primary" name="operation" value="deposit"
+                <button type="button" class="btn btn-primary" name="operation" value="deposit"
                         ng-click="vm.deposit(vm.amount)">
                     Deposit
+                </button>
+                <button type="button" class="btn btn-primary" name="operation" value="withdraw"
+                        ng-click="vm.withdraw(vm.amount)">Withdraw
                 </button>
                 <br>
             </form>

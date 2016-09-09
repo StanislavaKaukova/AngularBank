@@ -23,20 +23,20 @@ import java.text.DecimalFormat;
  * @author Stanislava Kaukova(sisiivanovva@gmail.com)
  */
 @Singleton
-public class DepositService extends HttpServlet {
+public class WithdrawService extends HttpServlet {
   private final Validator validator;
   private final AccountRepository accountRepository;
   private Gson json;
 
   @Inject
-  public DepositService(@Named("amountValidator") Validator validator, AccountRepository accountRepository, Gson json) {
+  public WithdrawService(@Named("amountValidator") Validator validator, AccountRepository accountRepository, Gson json) {
     this.validator = validator;
     this.accountRepository = accountRepository;
     this.json = json;
   }
 
   @Override
-  public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     resp.setContentType("application/json");
 
     TransactionRequestDto requestDto;
@@ -50,7 +50,7 @@ public class DepositService extends HttpServlet {
       requestDto = json.fromJson(reader, TransactionRequestDto.class);
 
     } catch (JsonSyntaxException e) {
-      message = "The input field should be number!!!";
+      message = "The input field is incorrect!!!";
 
       resp.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
       resp.getWriter().print(json.toJson(new TransactionResponseDto(accountRepository.getBalance(userEmail), message)));
@@ -69,15 +69,22 @@ public class DepositService extends HttpServlet {
       resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
       resp.getWriter().print(json.toJson(new TransactionResponseDto((accountRepository.getBalance(userEmail)), message)));
     } else {
+      boolean isInsufficient = accountRepository.getBalance(userEmail) - requestDto.amount < 0;
 
-      accountRepository.deposit(userEmail, requestDto.amount);
+      if (isInsufficient) {
+        resp.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
+        resp.getWriter().print(json.toJson(new TransactionResponseDto(accountRepository.getBalance(userEmail), "You can not withdraw. The balance is insufficient!")));
+        return;
+      }
+      accountRepository.withdraw(userEmail, requestDto.amount);
 
       Double currentBalance = accountRepository.getBalance(userEmail);
       currentBalance = Double.parseDouble(new DecimalFormat("##.##").format(currentBalance));
 
-      message = "Success! You added " + requestDto.amount + " to your balance";
+      message = "Success! You withdraw " + requestDto.amount + " from your balance";
 
       resp.getWriter().print(json.toJson(new TransactionResponseDto(currentBalance, message)));
     }
   }
 }
+

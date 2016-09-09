@@ -3,3 +3,5 @@ build
 bin/
 node_modules/
 vendor/
+build.sh
+frontend.go

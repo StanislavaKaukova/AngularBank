@@ -69,4 +69,15 @@ public class PersistentAccountRepository implements AccountRepository {
       }
     });
   }
+
+  @Override
+  public void withdraw(String userEmail, Double amount) {
+    Account account = findByEmail(userEmail);
+    account.withdraw(amount);
+
+    DatabaseHelper databaseHelper = new DatabaseHelper(provider);
+    String query = "UPDATE accounts SET balance=? WHERE email=?";
+
+    databaseHelper.executeQuery(query, account.getBalance(), userEmail);
+  }
 }

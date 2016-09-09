@@ -11,7 +11,7 @@ import static org.hamcrest.core.Is.is;
  * @author Stanislava Kaukova(sisiivanovva@gmail.com)
  */
 public class AmountValidatorTest {
-  private Validator<String> validator;
+  private Validator<Double> validator;
 
   @Before
   public void setUp() throws Exception {
@@ -20,7 +20,7 @@ public class AmountValidatorTest {
 
   @Test
   public void validAmount() throws Exception {
-    String amount = "123.00";
+    Double amount = 123.00;
 
     String actual = validator.validate(amount);
     String expectedErrorMessage = "";
@@ -30,40 +30,27 @@ public class AmountValidatorTest {
 
   @Test
   public void tooLongWholePart() throws Exception {
-    String amount = "123456.00";
+    Double amount = -1001223234434.00;
 
     String actual = validator.validate(amount);
-    String expectedErrorMessage = "Amount must be positive number.";
+    String expectedErrorMessage = "Amount should be positive number";
 
     assertThat(actual, is(expectedErrorMessage));
   }
 
-  @Test
-  public void tooLongFractionPart() throws Exception {
-    String amount = "100.1234";
-
-    String actual = validator.validate(amount);
-    String expectedErrorMessage = "Amount must be positive number.";
-
-    assertThat(actual, is(expectedErrorMessage));
-  }
-
-  @Test
+  @Test(expected = NumberFormatException.class)
   public void amountIsLetters() throws Exception {
-    String amount = "asas";
+    String amount = "assssaa";
 
-    String actual = validator.validate(amount);
-    String expectedErrorMessage = "Amount must be positive number.";
-
-    assertThat(actual, is(expectedErrorMessage));
+    validator.validate(Double.valueOf(amount));
   }
 
   @Test
   public void amountIsNegative() throws Exception {
-    String amount = "-10.20";
+    Double amount = -10.20;
 
     String actual = validator.validate(amount);
-    String expectedErrorMessage = "Amount must be positive number.";
+    String expectedErrorMessage = "Amount should be positive number";
 
     assertThat(actual, is(expectedErrorMessage));
   }

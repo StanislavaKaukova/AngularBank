@@ -3,6 +3,6 @@
  */
 angular.module('bank.endpoints', [])
   .constant('bankEndpoints', {
-    TRANSACTIONS: '/r/account/deposit',
+    TRANSACTIONS: '/r/account/',
     ACCOUNT: '/r/account/balance'
   });
