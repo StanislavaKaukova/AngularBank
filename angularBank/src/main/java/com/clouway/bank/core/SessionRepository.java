@@ -43,5 +43,12 @@ public interface SessionRepository {
   String findUserEmailBySid(String sessionId);
 
   void update(Session session);
+
+  /**
+   * Will return online users
+   *
+   * @return online users
+   */
+  int getOnlineUsersCount();
 }
 

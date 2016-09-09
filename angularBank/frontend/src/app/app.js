@@ -8,7 +8,8 @@ angular.module('bank', [
   'ngCookies',
   'angular-growl',
   'bank.transactions',
-  'bank.login'
+  'bank.login',
+  'bank.home'
 ])
 
   .config(function myAppConfig($stateProvider, $urlRouterProvider) {

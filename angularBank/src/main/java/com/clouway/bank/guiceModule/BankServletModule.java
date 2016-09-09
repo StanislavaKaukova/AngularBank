@@ -1,6 +1,7 @@
 package com.clouway.bank.guiceModule;
 
 import com.clouway.bank.adapter.http.CurrentUserService;
+import com.clouway.bank.adapter.http.HomePageService;
 import com.clouway.bank.adapter.http.UserAccountService;
 import com.clouway.bank.adapter.http.DepositService;
 import com.clouway.bank.adapter.http.WithdrawService;
@@ -21,5 +22,6 @@ public class BankServletModule extends ServletModule {
     serve("/r/account/withdraw").with(WithdrawService.class);
     serve("/r/login").with(LoginService.class);
     serve("/r/account/currentAccount").with(CurrentUserService.class);
+    serve("/r/account/onlineUsers").with(HomePageService.class);
   }
 }

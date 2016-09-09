@@ -5,7 +5,6 @@ angular.module('bank.login', [
   'angular-growl',
   'ui.router',
   'bank.http',
-  'bank.endpoints',
   'ngCookies'
 ])
 
