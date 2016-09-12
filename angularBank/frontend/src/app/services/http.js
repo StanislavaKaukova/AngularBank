@@ -1,7 +1,28 @@
 /**
  * @author Stanislava Kaukova(sisiivanovva@gmail.com)
  */
+function requestInterceptor($q, $injector) {
+  return {
+    response: function (res) {
+      return $q.resolve(res);
+    },
+
+    responseError: function (res) {
+      if (res.status === 401) {
+        var $state = $injector.get('$state');
+        $state.go("login");
+      }
+      return $q.reject(res);
+    }
+  };
+}
+
 angular.module('bank.http', ['ui.router'])
+  .factory('requestInterceptor', requestInterceptor)
+
+  .config(function ($httpProvider) {
+    $httpProvider.interceptors.push('requestInterceptor');
+  })
 
   .service('httpRequest', function ($http, $q) {
 

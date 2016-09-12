@@ -2,6 +2,8 @@ package com.clouway.bank.adapter.jdbc.persistence;
 
 import com.clouway.bank.core.AccountRepository;
 import com.clouway.bank.core.ConnectionException;
+import com.clouway.bank.core.SessionRepository;
+import com.clouway.bank.core.UserRepository;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 
@@ -16,6 +18,8 @@ public class JdbcAdapterModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(AccountRepository.class).to(PersistentAccountRepository.class);
+    bind(SessionRepository.class).to(PersistentSessionRepository.class);
+    bind(UserRepository.class).to(PersistentUserRepository.class);
   }
 
   @Provides
@@ -27,3 +31,4 @@ public class JdbcAdapterModule extends AbstractModule {
     }
   }
 }
+

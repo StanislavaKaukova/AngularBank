@@ -18,4 +18,9 @@ public class AmountValidator implements Validator<Double> {
     }
     return message;
   }
+
+  @Override
+  public String validate(String email, String password) {
+    return null;
+  }
 }

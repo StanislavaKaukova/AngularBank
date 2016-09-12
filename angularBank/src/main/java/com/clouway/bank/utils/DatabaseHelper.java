@@ -42,7 +42,6 @@ public class DatabaseHelper<T> {
 
       return (T) getter.getRows(resultSet);
     } catch (SQLException e) {
-      e.printStackTrace();
       throw new ConnectionException("");
     }
   }

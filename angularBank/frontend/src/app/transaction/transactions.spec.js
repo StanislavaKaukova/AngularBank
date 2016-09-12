@@ -5,7 +5,7 @@ describe('TransactionCtrl tests', function () {
   var ctrl, scope, gateway, deferred, growl, response;
 
   beforeEach(function () {
-    module('bank.transaction');
+    module('bank.transactions');
 
     inject(function ($controller, $q, $rootScope) {
       scope = $rootScope.$new();
@@ -18,7 +18,7 @@ describe('TransactionCtrl tests', function () {
         growl: growl
       });
     });
-
+  });
 
     it('should deposit in account', function () {
       ctrl.balance = 0.00;
@@ -28,12 +28,12 @@ describe('TransactionCtrl tests', function () {
         balance: 200
       };
 
-      gateway.makeTransaction = jasmine.createSpy('deposit').and.returnValue(deferred.promise);
+      gateway.deposit = jasmine.createSpy('deposit').and.returnValue(deferred.promise);
       growl.success = jasmine.createSpy('success');
 
       ctrl.deposit();
 
-      expect(gateway.makeTransaction).toHaveBeenCalled();
+      expect(gateway.deposit).toHaveBeenCalled();
 
       deferred.resolve(response);
       scope.$digest();
@@ -50,11 +50,11 @@ describe('TransactionCtrl tests', function () {
         balance: 100
       };
 
-      gateway.makeTransaction = jasmine.createSpy('deposit').and.returnValue(deferred.promise);
+      gateway.deposit = jasmine.createSpy('deposit').and.returnValue(deferred.promise);
       growl.error = jasmine.createSpy('error');
 
       ctrl.deposit();
-      expect(gateway.makeTransaction).toHaveBeenCalled();
+      expect(gateway.deposit).toHaveBeenCalled();
 
       deferred.reject(response);
       scope.$digest();
@@ -90,12 +90,12 @@ describe('TransactionCtrl tests', function () {
         balance: 100
       };
 
-      gateway.makeTransaction = jasmine.createSpy('withdraw').and.returnValue(deferred.promise);
+      gateway.withdraw = jasmine.createSpy('withdraw').and.returnValue(deferred.promise);
       growl.success = jasmine.createSpy('success');
 
       ctrl.withdraw(100);
 
-      expect(gateway.makeTransaction).toHaveBeenCalled();
+      expect(gateway.withdraw).toHaveBeenCalled();
 
       deferred.resolve(response);
       scope.$digest();
@@ -112,11 +112,11 @@ describe('TransactionCtrl tests', function () {
         balance: 0.00
       };
 
-      gateway.makeTransaction = jasmine.createSpy('withdraw').and.returnValue(deferred.promise);
+      gateway.withdraw = jasmine.createSpy('withdraw').and.returnValue(deferred.promise);
       growl.error = jasmine.createSpy('error');
 
       ctrl.withdraw('as');
-      expect(gateway.makeTransaction).toHaveBeenCalled();
+      expect(gateway.withdraw).toHaveBeenCalled();
 
       deferred.reject(response);
       scope.$digest();
@@ -133,11 +133,11 @@ describe('TransactionCtrl tests', function () {
         balance: 0.00
       };
 
-      gateway.makeTransaction = jasmine.createSpy('withdraw').and.returnValue(deferred.promise);
+      gateway.withdraw = jasmine.createSpy('withdraw').and.returnValue(deferred.promise);
       growl.error = jasmine.createSpy('error');
 
       ctrl.withdraw(100);
-      expect(gateway.makeTransaction).toHaveBeenCalled();
+      expect(gateway.withdraw).toHaveBeenCalled();
 
       deferred.reject(response);
       scope.$digest();
@@ -146,4 +146,3 @@ describe('TransactionCtrl tests', function () {
       expect(ctrl.balance).toEqual(0.00);
     });
   });
-});

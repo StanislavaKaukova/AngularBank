@@ -24,12 +24,16 @@ angular.module('bank.transactions', [
 
   .service('accountGateway', function (httpRequest, bankEndpoints) {
     return {
-      makeTransaction: function (amount, type) {
-        return httpRequest.post(bankEndpoints.TRANSACTIONS + type, {amount: amount});
+      deposit: function (amount) {
+        return httpRequest.post(bankEndpoints.DEPOSIT, {amount: amount});
+      },
+
+      withdraw: function (amount) {
+        return httpRequest.post(bankEndpoints.WITHDRAW, {amount: amount});
       },
 
       loadAccountData: function () {
-        return httpRequest.get(bankEndpoints.ACCOUNT);
+        return httpRequest.get(bankEndpoints.USER_BALANCE);
       }
     };
   })
@@ -38,23 +42,7 @@ angular.module('bank.transactions', [
     var vm = this;
 
     vm.deposit = function () {
-      makeTransaction('deposit');
-    };
-
-    vm.withdraw = function () {
-      makeTransaction('withdraw');
-    };
-
-    vm.loadAccountData = function () {
-      accountGateway.loadAccountData()
-        .then(function (userAccount) {
-          vm.email = userAccount.email;
-          vm.balance = userAccount.balance;
-        });
-    };
-
-    function makeTransaction(type) {
-      accountGateway.makeTransaction(vm.amount, type)
+      accountGateway.deposit(vm.amount)
         .then(function (response) {
             vm.balance = response.balance;
 
@@ -65,5 +53,30 @@ angular.module('bank.transactions', [
             growl.error(response.message);
           }
         );
-    }
+    };
+
+    vm.withdraw = function () {
+      accountGateway.withdraw(vm.amount)
+        .then(function (response) {
+            vm.balance = response.balance;
+
+            growl.success(response.message);
+          },
+
+          function error(response) {
+            growl.error(response.message);
+          }
+        );
+    };
+
+    vm.loadAccountData = function () {
+      accountGateway.loadAccountData()
+        .then(function (userAccount) {
+            vm.email = userAccount.email;
+            vm.balance = userAccount.balance;
+          },
+          function (error) {
+            growl.error(error);
+          });
+    };
   });
