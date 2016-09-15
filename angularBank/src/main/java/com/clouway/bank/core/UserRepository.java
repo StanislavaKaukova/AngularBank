@@ -8,6 +8,13 @@ package com.clouway.bank.core;
  */
 public interface UserRepository {
   /**
+   * Register user
+   *
+   * @param user registered user
+   */
+  void register(User user);
+
+  /**
    * Find registered user
    *
    * @param email email of the user

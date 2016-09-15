@@ -14,34 +14,67 @@ public class UserValidatorTest {
   private Validator<User> validator = new UserValidator();
 
   @Test
-  public void userIsValid() throws Exception {
+  public void userNameIsValid() throws Exception {
     User user = new User("Ivan", "mail@abv.bg", "pass123");
-    String result = validator.validate(user.email, user.password);
+    String result = validator.validate(user);
 
     assertThat(result, is(""));
   }
 
   @Test
+  public void userNameContainsDigits() throws Exception {
+    User user = new User("Ivan66", "ivan@abv.bg", "pass123");
+    String result = validator.validate(user);
+
+    assertThat(result, is("The name should be between 1 and 15 letters"));
+  }
+
+  @Test
+  public void userNameIsTooLong() throws Exception {
+    User user = new User("ThisNameIsToLong", "ivan@abv.bg", "pass123");
+    String result = validator.validate(user);
+
+    assertThat(result, is("The name should be between 1 and 15 letters"));
+  }
+
+  @Test
   public void emailIsNotInValidFormat() throws Exception {
     User user = new User("Ivan", "ivan.abv.bg", "pass123");
-    String result = validator.validate(user.email, user.password);
+    String result = validator.validate(user);
 
-    assertThat(result, is("The email is wrong"));
+    assertThat(result, is("The email format should be like example@domain.com"));
   }
 
   @Test
-  public void passwordIsToShort() throws Exception {
+  public void passwordIsTooShort() throws Exception {
     User user = new User("Ivan", "ivan@abv.bg", "pass");
-    String result = validator.validate(user.email, user.password);
+    String result = validator.validate(user);
 
-    assertThat(result, is("The password is wrong!The password should be at least 6 symbols and maximum 18"));
+    assertThat(result, is("The password should be at least 6 symbols"));
   }
 
   @Test
-  public void passwordIsToLong() throws Exception {
+  public void passwordIsTooLong() throws Exception {
     User user = new User("Ivan", "ivan@abv.bg", "pass123456789012345678");
-    String result = validator.validate(user.email, user.password);
+    String result = validator.validate(user);
 
-    assertThat(result, is("The password is wrong!The password should be at least 6 symbols and maximum 18"));
+    assertThat(result, is("The password should be at least 6 symbols"));
+  }
+
+  @Test
+  public void objectsAreEquals() throws Exception {
+    String object1 = "object1";
+    String object2 = "object1";
+    String result = validator.validateEquality(object1, object2);
+
+    assertThat(result, is(""));
+  }
+  @Test
+  public void objectsAreNotEquals() throws Exception {
+    String object1 = "object1";
+    String object2 = "object2";
+    String result = validator.validateEquality(object1, object2);
+
+    assertThat(result, is("The passwords are not equals!"));
   }
 }

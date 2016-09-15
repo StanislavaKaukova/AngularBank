@@ -23,4 +23,9 @@ public class AmountValidator implements Validator<Double> {
   public String validate(String email, String password) {
     return null;
   }
+
+  @Override
+  public String validateEquality(String object1, String object2) {
+    return null;
+  }
 }

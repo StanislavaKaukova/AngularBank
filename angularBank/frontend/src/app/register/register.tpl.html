@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+        <form>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Enter Name</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="vm.user.name" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Enter Email</label>
+                    <div class="input-group">
+                        <input type="email" class="form-control" ng-model="vm.user.email"
+                               required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Enter Password</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" ng-model="vm.user.password"
+                               required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control"
+                               ng-model="vm.confirmPassword"
+                               required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-success btn-block"
+                        ng-click="vm.register(vm.user,vm.confirmPassword)">Register
+                </button>
+            </div>
+    </div>
+    </form>
+</div>
+</div>
