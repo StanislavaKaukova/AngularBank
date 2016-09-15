@@ -7,5 +7,6 @@ angular.module('bank.endpoints', [])
     USER_ACCOUNT: '/r/account/currentAccount',
     DEPOSIT: '/r/account/deposit',
     WITHDRAW: '/r/account/withdraw',
-    USER_BALANCE: '/r/user/account/balance'
+    USER_BALANCE: '/r/user/account/balance',
+    REGISTER: '/r/register'
   });

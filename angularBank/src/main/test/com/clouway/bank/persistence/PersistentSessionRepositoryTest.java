@@ -69,6 +69,6 @@ public class PersistentSessionRepositoryTest {
 
     Optional<Session> actual = repository.findSessionById(session.sessionId);
 
-    assertThat(actual, is(equalTo(Optional.of(session))));
+    assertThat(actual, is(equalTo(Optional.absent())));
   }
 }

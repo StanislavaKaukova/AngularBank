@@ -20,4 +20,13 @@ public interface Validator<T> {
    * @return
    */
   String validate(String email, String password);
+
+  /**
+   * Will compare two objects
+   *
+   * @param object1 object 1
+   * @param object2 object 2
+   * @return report from validation
+   */
+  String validateEquality(String object1, String object2);
 }

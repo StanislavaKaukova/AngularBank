@@ -3,16 +3,16 @@ package com.clouway.bank.guiceModule;
 import com.clouway.bank.adapter.jdbc.persistence.JdbcAdapterModule;
 import com.clouway.bank.core.CurrentTime;
 import com.clouway.bank.core.CurrentTimeImplementation;
+import com.clouway.bank.core.IdGenerator;
 import com.clouway.bank.core.User;
 import com.clouway.bank.core.Validator;
-import com.clouway.bank.validator.AmountValidator;
-import com.google.inject.AbstractModule;
-import com.google.inject.name.Names;
-import com.clouway.bank.core.IdGenerator;
 import com.clouway.bank.utils.SessionIdFinder;
 import com.clouway.bank.utils.SessionIdGenerator;
+import com.clouway.bank.validator.AmountValidator;
 import com.clouway.bank.validator.UserValidator;
+import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.name.Names;
 
 /**
  * @author Stanislava Kaukova(sisiivanovva@gmail.com)
