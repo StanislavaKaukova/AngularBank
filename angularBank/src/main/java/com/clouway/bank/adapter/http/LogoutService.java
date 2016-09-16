@@ -2,6 +2,7 @@ package com.clouway.bank.adapter.http;
 
 import com.clouway.bank.core.SessionRepository;
 import com.clouway.bank.utils.SessionIdFinder;
+import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -13,15 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author Stanislava Kaukova(sisiivanovva@gmail.com)
+ * Created by Stanislava on 9/16/2016.
  */
 @Singleton
-public class AccountService extends HttpServlet {
+public class LogoutService extends HttpServlet {
   private final SessionIdFinder sessionIdFinder;
   private final SessionRepository sessionRepository;
 
   @Inject
-  public AccountService(SessionIdFinder sessionIdFinder, SessionRepository sessionRepository) {
+  public LogoutService(SessionIdFinder sessionIdFinder, SessionRepository sessionRepository) {
     this.sessionIdFinder = sessionIdFinder;
     this.sessionRepository = sessionRepository;
   }
@@ -29,9 +30,13 @@ public class AccountService extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     String sessionId = sessionIdFinder.findSid(req.getCookies());
-    System.out.println(sessionId);
-    String email = sessionRepository.findUserEmailBySid(sessionId);
 
-    resp.getWriter().print(new Gson().toJson(email));
+    if (!Strings.isNullOrEmpty(sessionId)) {
+      resp.getWriter().print(new Gson().toJson(sessionId));
+      sessionRepository.remove(sessionId);
+      return;
+    }
+
+    resp.getWriter().print(new Gson().toJson("Can not return sessionId"));
   }
 }

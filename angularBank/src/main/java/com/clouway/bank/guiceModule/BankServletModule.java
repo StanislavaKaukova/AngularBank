@@ -9,7 +9,7 @@ import com.google.inject.servlet.ServletModule;
 public class BankServletModule extends ServletModule {
   @Override
   protected void configureServlets() {
-    filter("/*").through(SecurityFilter.class);
+  //  filter("/*").through(SecurityFilter.class);
 
     serve("/r/account/deposit").with(DepositService.class);
     serve("/r/user/account/balance").with(UserAccountService.class);
@@ -20,5 +20,6 @@ public class BankServletModule extends ServletModule {
     serve("/r/account/currentAccount").with(CurrentUserService.class);
     serve("/r/account/history").with(TransactionHistoryService.class);
     serve("/r/transactionsHistory/totalPages").with(TotalPagesService.class);
+    serve("/r/logout").with(LogoutService.class);
   }
 }

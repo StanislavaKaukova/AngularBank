@@ -10,7 +10,7 @@ angular.module('bank', [
   'bank.transactions',
   'bank.login',
   'bank.register',
-  'bank.login',
+  'bank.logout',
   'bank.history'
 ])
 
