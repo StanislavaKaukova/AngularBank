@@ -1,5 +1,6 @@
 package com.clouway.bank.adapter.jdbc.persistence;
 
+import com.clouway.bank.core.ConnectionException;
 import com.clouway.bank.core.RowGetter;
 import com.clouway.bank.core.Session;
 import com.clouway.bank.core.SessionRepository;
@@ -9,6 +10,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -78,6 +80,21 @@ public class PersistentSessionRepository implements SessionRepository {
     DatabaseHelper databaseHelper = new DatabaseHelper(provider);
     String query = "Update sessions set expirationTime=? where id=?";
 
-    databaseHelper.executeQuery(query,session.expirationTime, session.sessionId);
+    databaseHelper.executeQuery(query, session.expirationTime, session.sessionId);
+  }
+
+  @Override
+  public int getOnlineUsersCount() {
+    int counter = 0;
+    try (PreparedStatement statement = provider.get().prepareStatement("SELECT COUNT (DISTINCT (email))FROM sessions")) {
+
+      ResultSet resultSet = statement.executeQuery();
+      while (resultSet.next()) {
+        counter = resultSet.getInt(1);
+      }
+    } catch (SQLException e) {
+      throw new ConnectionException("Cannot connect to database");
+    }
+    return counter;
   }
 }
